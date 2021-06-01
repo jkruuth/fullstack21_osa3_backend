@@ -8,7 +8,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-let persons = [
+/*let persons = [
     {
         id: 1,
         name: "Arto Hellas",
@@ -32,7 +32,7 @@ let persons = [
         name: "Mary Poppendick",
         number: "39-23-123456"
     }
-]
+]*/
 
 const generateRndId = () => {
     return Math.floor(Math.random() * 1000)
