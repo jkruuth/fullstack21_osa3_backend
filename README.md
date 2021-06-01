@@ -1,3 +1,5 @@
 OSA 3 BACKEND
 
-https://agile-escarpment-56391.herokuapp.com/
+backend url : https://agile-escarpment-56391.herokuapp.com/api/persons
+
+url to actual app : https://agile-escarpment-56391.herokuapp.com
