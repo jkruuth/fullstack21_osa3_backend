@@ -2,15 +2,16 @@ const { request, response } = require('express')
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-
+const Person = require('./models/person')
 
 const app = express()
+
 app.use(express.json())
 app.use(cors())
 app.use(express.static('build'))
 
 
-let persons = [
+/* let persons = [
     {
         id: 1,
         name: "Arto Hellas",
@@ -34,7 +35,7 @@ let persons = [
         name: "Mary Poppendick",
         number: "39-23-123456"
     }
-]
+] */
 
 const generateRndId = () => {
     return Math.floor(Math.random() * 1000)
@@ -51,18 +52,15 @@ app.get('/', (req, res) => {
   })
 
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+    Person.find({}).then(persons => {
+        response.json(persons)
+    })
 })
 
 app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(person => person.id === id)
-
-    if (person) {
+    Person.findById(request.params.id).then(person => {
         response.json(person)
-    } else {
-        response.status(404).end()
-    }
+    })
   })
 
 app.get('/info', (req, res) => {
@@ -91,7 +89,6 @@ app.post('/api/persons', (request, response) => {
     }
 
     const person = {
-        id: generateRndId(),
         name: body.name,
         number: body.number,
     }
