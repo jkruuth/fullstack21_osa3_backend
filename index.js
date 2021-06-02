@@ -11,6 +11,17 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(cors())
 
+// virheellisten pyyntöjen käsittely
+  const errorHandler = (error, request, response, next) => {
+    console.log(error.message)
+
+    if (error.name === 'CastError') {
+      return response.status(400).send({ error: 'malformatted id '})
+    }
+
+    next(error)
+  }
+
 /* let persons = [
     {
         id: 1,
@@ -96,32 +107,20 @@ app.post('/api/persons', (request, response) => {
     })
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndRemove(request.params.id).then(result => {
         response.status(204).end()
     })
-    .catch(error => next(error))
+    .catch(error => next(error));
 })
 
-const unknownEndpoint = (request, response) => {
-    response.status.send({ error: 'Unknown endpoint' })
+/* const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'Unknown endpoint' })
   }
 
   // olemattomien osoitteiden käsittely
   app.use(unknownEndpoint)
-
-
-  // virheellisten pyyntöjen käsittely
-  const errorHandler = (error, request, response, next) => {
-    console.log(error.message)
-
-    if (error.name === 'CastError') {
-      return response.status(400).send({ error: 'malformatted id '})
-    }
-
-    next(error)
-  }
-
+ */
   app.use(errorHandler)
 
 const PORT = process.env.PORT
