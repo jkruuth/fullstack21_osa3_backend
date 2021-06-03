@@ -1,5 +1,4 @@
 require('dotenv').config()
-const { request, response } = require('express')
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
@@ -19,7 +18,9 @@ app.use(cors())
     if (error.name === 'CastError') {
       return response.status(400).send({ error: 'malformatted id '})
     } else if (error.name === 'ValidationError') {
-        return response.status(400).json({ error: message })
+        return response.status(400).json({ error: error.message })
+    } else if (error.name === 'BadRequest') {
+        return response.status(400).json({ error: error.message })
     }
 
     next(error)
