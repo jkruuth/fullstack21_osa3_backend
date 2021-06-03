@@ -1,9 +1,8 @@
 
-POST https://agile-escarpment-56391.herokuapp.com/api/persons
+POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "id": 9,
-    "name": "Arto1",
-    "number": "12w" 
+    "name": "Anna",
+    "number": "044-12345667" 
 }
